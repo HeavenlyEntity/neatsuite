@@ -16,9 +16,13 @@
     "prettier": "^3.2.5",
     "turbo": "^2.5.5"
   },
-  "packageManager": "pnpm@8.15.6",
   "engines": {
     "node": ">=18"
   },
-  "name": "with-changesets"
+  "name": "with-changesets",
+  "packageManager": "npm@10.9.2",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }
