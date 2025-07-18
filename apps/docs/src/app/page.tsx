@@ -1,4 +1,4 @@
-import { Button } from "@amware/core";
+import { Button } from "@neatsuite/core";
 
 export default function Page() {
   return (

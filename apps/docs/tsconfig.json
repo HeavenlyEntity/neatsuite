@@ -1,6 +1,6 @@
 {
   "exclude": ["node_modules"],
-  "extends": "@amware/tsconfig/nextjs.json",
+  "extends": "@neatsuite/tsconfig/nextjs.json",
   "compilerOptions": {
     "outDir": "dist",
     "incremental": true,
