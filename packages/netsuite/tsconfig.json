@@ -1,0 +1,15 @@
+{
+  "extends": "@neatsuite/tsconfig/node14.json",
+  "compilerOptions": {
+    "lib": ["ES2020"],
+    "module": "NodeNext",
+    "target": "ES2020",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node", "jest"]
+  },
+  "include": ["src"],
+  "exclude": ["dist", "build", "node_modules", "**/*.test.ts", "**/*.spec.ts"]
+} 

@@ -1,0 +1,46 @@
+# Source files (only ship dist)
+src/
+examples/
+
+# Configuration files
+tsconfig.json
+tsup.config.ts
+jest.config.js
+.eslintrc.js
+
+# Test files
+__tests__/
+*.test.ts
+*.spec.ts
+coverage/
+
+# Development files
+.gitignore
+.editorconfig
+.prettierrc
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp
+.turbo/ 

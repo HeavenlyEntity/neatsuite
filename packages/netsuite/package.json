@@ -1,0 +1,60 @@
+{
+  "name": "@neatsuite/http",
+  "version": "0.0.0",
+  "description": "A TypeScript-first NetSuite API client with built-in OAuth 1.0a authentication, retry logic, and performance monitoring",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "license": "MIT",
+  "files": [
+    "dist/**",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts --format esm,cjs --watch --dts",
+    "lint": "eslint \"src/**/*.ts*\"",
+    "test": "jest",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "devDependencies": {
+    "@neatsuite/tsconfig": "*",
+    "@neatsuite/eslint-config": "*",
+    "@types/node": "^20.0.0",
+    "@types/jest": "^29.5.0",
+    "eslint": "^8.57.0",
+    "jest": "^29.5.0",
+    "ts-jest": "^29.1.0",
+    "tsup": "^8.0.2",
+    "typescript": "5.5.4"
+  },
+  "dependencies": {
+    "axios": "^1.6.8",
+    "oauth-1.0a": "^2.2.6",
+    "p-retry": "^5.1.2"
+  },
+  "peerDependencies": {
+    "crypto": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "netsuite",
+    "api",
+    "oauth",
+    "rest",
+    "restlet",
+    "typescript",
+    "client"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neatsuite/netsuite-http.git"
+  },
+  "bugs": {
+    "url": "https://github.com/neatsuite/netsuite-http/issues"
+  },
+  "homepage": "https://github.com/neatsuite/netsuite-http#readme"
+} 
