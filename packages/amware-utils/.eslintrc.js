@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: ["@acme/eslint-config/library.js"],
+  extends: ["@neatsuite/eslint-config/library.js"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     project: true,
