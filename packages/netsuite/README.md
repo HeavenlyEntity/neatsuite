@@ -339,6 +339,54 @@ const client = new NetSuiteClient(config, customLogger);
    }
    ```
 
+## Module Formats
+
+This package supports multiple module formats for maximum compatibility:
+
+- **ES Modules (ESM)**: `import { NetSuiteClient } from '@neatsuite/http'`
+- **CommonJS (CJS)**: `const { NetSuiteClient } = require('@neatsuite/http')`
+- **UMD/AMD**: Compatible with RequireJS and other AMD loaders
+
+### AMD/RequireJS Usage
+
+```javascript
+// Configure RequireJS
+require.config({
+  paths: {
+    'netsuite-http': './node_modules/@neatsuite/http/dist/index.umd'
+  }
+});
+
+// Use with AMD
+require(['netsuite-http'], function(neatHttp) {
+  const { NetSuiteClient } = neatHttp;
+  
+  const client = new NetSuiteClient({
+    oauth: { /* ... */ },
+    accountId: 'your-account-id'
+  });
+});
+
+// Or define a module
+define(['netsuite-http'], function(neatHttp) {
+  const { NetSuiteClient } = neatHttp;
+  // Your module code here
+  return MyNetSuiteService;
+});
+```
+
+### Browser Global
+
+When included via script tag, the library is available as `neatHttp`:
+
+```html
+<script src="./node_modules/@neatsuite/http/dist/index.umd.js"></script>
+<script>
+  const { NetSuiteClient } = neatHttp;
+  // Use the client
+</script>
+```
+
 ## TypeScript Support
 
 This package is written in TypeScript and provides comprehensive type definitions:

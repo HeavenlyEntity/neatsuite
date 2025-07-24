@@ -827,12 +827,8 @@
   resolved "https://registry.npmjs.org/@microsoft/tsdoc/-/tsdoc-0.14.2.tgz"
   integrity sha512-9b8mPpKrfeGRuhFH5iO1iwCLeIIsV6+H1sRfxbkoGXIyQE2BTsPd9zqSqQJ+pv5sJ/hT5M1zvOFL02MnEezFug==
 
-"@neatsuite/core@*", "@neatsuite/core@file:C:\\Users\\Alec M\\Documents\\Github\\netsuite-http\\packages\\amware-core":
-  version "0.0.0"
-  resolved "file:packages/amware-core"
-  dependencies:
-    "@neatsuite/netsuite" "*"
-    react "^18.2.0"
+"@neatsuite/core@*", "@neatsuite/core@file:C:\\Users\\Alec M\\Documents\\Github\\netsuite-http\\packages\\neatsuite-core":
+  resolved "git+ssh://git@github.com/packages/amware-core.git"
 
 "@neatsuite/docs@file:C:\\Users\\Alec M\\Documents\\Github\\netsuite-http\\apps\\docs":
   version "0.0.0"
@@ -848,23 +844,20 @@
   version "0.0.0"
   resolved "file:packages/eslint-config"
 
-"@neatsuite/http@*", "@neatsuite/http@file:C:\\Users\\Alec M\\Documents\\Github\\netsuite-http\\packages\\netsuite":
-  version "0.0.0"
+"@neatsuite/http@file:C:\\Users\\Alec M\\Documents\\Github\\netsuite-http\\packages\\netsuite":
+  version "1.0.0"
   resolved "file:packages/netsuite"
   dependencies:
     axios "^1.6.8"
     oauth-1.0a "^2.2.6"
     p-retry "^5.1.2"
 
-"@neatsuite/tsconfig@*", "@neatsuite/tsconfig@file:C:\\Users\\Alec M\\Documents\\Github\\netsuite-http\\packages\\amware-tsconfig":
+"@neatsuite/tsconfig@*", "@neatsuite/tsconfig@file:C:\\Users\\Alec M\\Documents\\Github\\netsuite-http\\packages\\neatsuite-tsconfig":
   version "0.0.0"
-  resolved "file:packages/amware-tsconfig"
+  resolved "file:packages/neatsuite-tsconfig"
 
-"@neatsuite/utils@*", "@neatsuite/utils@file:C:\\Users\\Alec M\\Documents\\Github\\netsuite-http\\packages\\amware-utils":
-  version "0.0.0"
-  resolved "file:packages/amware-utils"
-  dependencies:
-    react "^18.2.0"
+"@neatsuite/utils@*", "@neatsuite/utils@file:C:\\Users\\Alec M\\Documents\\Github\\netsuite-http\\packages\\neatsuite-utils":
+  resolved "git+ssh://git@github.com/packages/amware-utils.git"
 
 "@next/env@14.2.30":
   version "14.2.30"
