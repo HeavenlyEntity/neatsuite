@@ -2,13 +2,22 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev",
+    "dev": "turbo run dev", 
     "lint": "turbo run lint",
     "clean": "turbo run clean && rm -rf node_modules",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "turbo run build --filter=@amware/docs^... && changeset publish"
+    "release": "turbo run build --filter=@amware/docs^... && changeset publish",
+    "build:netsuite": "npm run build --workspace=@neatsuite/http",
+    "build:netsuite-umd": "npm run build --workspace=@neatsuite/http-umd",
+    "build:all-packages": "npm run build:netsuite && npm run build:netsuite-umd",
+    "publish:netsuite": "npm publish --workspace=@neatsuite/http",
+    "publish:netsuite-umd": "npm publish --workspace=@neatsuite/http-umd",
+    "publish:all-packages": "node scripts/publish-packages.js",
+    "package:test": "npm run pack:netsuite && npm run pack:netsuite-umd",
+    "pack:netsuite": "npm pack --workspace=@neatsuite/http --dry-run",
+    "pack:netsuite-umd": "npm pack --workspace=@neatsuite/http-umd --dry-run"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
