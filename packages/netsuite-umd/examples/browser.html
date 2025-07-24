@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NetSuite HTTP Client - Browser Example</title>
+</head>
+<body>
+    <h1>NetSuite HTTP Client - Browser Example</h1>
+    <div id="output"></div>
+    <button id="testBtn">Test NetSuite API</button>
+
+    <!-- Include the UMD bundle -->
+    <script src="https://unpkg.com/@neatsuite/http-umd/dist/netsuite-http.umd.min.js"></script>
+    
+    <script>
+        // The library is available as 'neatHttp' global
+        const { NetSuiteClient, NetSuiteError } = neatHttp;
+        
+        // Initialize the client
+        const client = new NetSuiteClient({
+            oauth: {
+                consumerKey: 'your-consumer-key',
+                consumerSecret: 'your-consumer-secret',
+                tokenKey: 'your-token-key',
+                tokenSecret: 'your-token-secret',
+                realm: 'your-realm'
+            },
+            accountId: 'your-account-id'
+        });
+
+        // Example function
+        async function testAPI() {
+            const output = document.getElementById('output');
+            output.innerHTML = '<p>Loading...</p>';
+            
+            try {
+                const response = await client.restlet({
+                    script: '123',
+                    deploy: '1',
+                    params: { action: 'test' }
+                });
+                
+                output.innerHTML = '<pre>' + JSON.stringify(response.data, null, 2) + '</pre>';
+            } catch (error) {
+                if (NetSuiteClient.isNetSuiteError(error)) {
+                    output.innerHTML = '<p style="color: red;">NetSuite Error: ' + error.message + '</p>';
+                } else {
+                    output.innerHTML = '<p style="color: red;">Error: ' + error.message + '</p>';
+                }
+            }
+        }
+
+        // Attach event listener
+        document.getElementById('testBtn').addEventListener('click', testAPI);
+        
+        console.log('NetSuite client loaded:', client);
+    </script>
+</body>
+</html> 

@@ -1,0 +1,47 @@
+{
+  "name": "@neatsuite/http-umd",
+  "version": "1.1.1",
+  "description": "UMD/Browser bundle for @neatsuite/http - NetSuite API client",
+  "main": "./dist/netsuite-http.umd.js",
+  "browser": "./dist/netsuite-http.umd.js",
+  "unpkg": "./dist/netsuite-http.umd.min.js",
+  "jsdelivr": "./dist/netsuite-http.umd.min.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@neatsuite/http": "^1.1.1"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.2",
+    "typescript": "5.5.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "netsuite",
+    "api",
+    "browser",
+    "umd",
+    "amd",
+    "requirejs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neatsuite/netsuite-http.git",
+    "directory": "packages/netsuite-umd"
+  },
+  "bugs": {
+    "url": "https://github.com/neatsuite/netsuite-http/issues"
+  },
+  "homepage": "https://github.com/neatsuite/netsuite-http#readme",
+  "license": "MIT"
+} 

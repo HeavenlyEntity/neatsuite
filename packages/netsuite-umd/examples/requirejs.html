@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NetSuite HTTP Client - RequireJS Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+</head>
+<body>
+    <h1>NetSuite HTTP Client - AMD/RequireJS Example</h1>
+    <div id="output"></div>
+
+    <script>
+        // Configure RequireJS
+        require.config({
+            paths: {
+                // Point to the CDN or local UMD build
+                'netsuite-http': 'https://unpkg.com/@neatsuite/http-umd/dist/netsuite-http.umd.min'
+            }
+        });
+
+        // Use the module with RequireJS
+        require(['netsuite-http'], function(neatHttp) {
+            const { NetSuiteClient, NetSuiteError, RateLimiter, ResponseCache } = neatHttp;
+            
+            // Create a service module
+            const NetSuiteService = {
+                client: null,
+                cache: new ResponseCache(),
+                rateLimiter: new RateLimiter(10, 60000), // 10 requests per minute
+                
+                init: function(config) {
+                    this.client = new NetSuiteClient(config);
+                },
+                
+                getCustomer: async function(customerId) {
+                    // Check rate limit
+                    if (!this.rateLimiter.canMakeRequest()) {
+                        const waitTime = this.rateLimiter.getTimeUntilNextRequest();
+                        throw new Error(`Rate limited. Please wait ${waitTime}ms`);
+                    }
+                    
+                    // Check cache
+                    const cacheKey = `customer:${customerId}`;
+                    const cached = this.cache.get(cacheKey);
+                    if (cached) {
+                        console.log('Returning cached data');
+                        return cached;
+                    }
+                    
+                    try {
+                        this.rateLimiter.recordRequest();
+                        
+                        const response = await this.client.restlet({
+                            script: '123',
+                            deploy: '1',
+                            params: {
+                                action: 'getCustomer',
+                                customerId: customerId
+                            }
+                        });
+                        
+                        // Cache for 5 minutes
+                        this.cache.set(cacheKey, response.data, 300);
+                        
+                        return response.data;
+                    } catch (error) {
+                        if (NetSuiteClient.isNetSuiteError(error)) {
+                            console.error('NetSuite API Error:', error.message);
+                            throw new Error(`Failed to get customer: ${error.message}`);
+                        }
+                        throw error;
+                    }
+                }
+            };
+            
+            // Initialize the service
+            NetSuiteService.init({
+                oauth: {
+                    consumerKey: 'your-consumer-key',
+                    consumerSecret: 'your-consumer-secret',
+                    tokenKey: 'your-token-key',
+                    tokenSecret: 'your-token-secret',
+                    realm: 'your-realm'
+                },
+                accountId: 'your-account-id'
+            });
+            
+            // Make the service available globally for testing
+            window.NetSuiteService = NetSuiteService;
+            
+            document.getElementById('output').innerHTML = 
+                '<p>NetSuite service loaded successfully!</p>' +
+                '<p>Try in console: <code>NetSuiteService.getCustomer("123")</code></p>';
+        });
+    </script>
+</body>
+</html> 
