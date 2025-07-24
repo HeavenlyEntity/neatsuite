@@ -1,8 +1,8 @@
 # @neatsuite/http-umd
 
-UMD/Browser bundle for [@neatsuite/http](https://www.npmjs.com/package/@neatsuite/http) - A TypeScript-first NetSuite API client.
+UMD/Browser utilities for [@neatsuite/http](https://www.npmjs.com/package/@neatsuite/http) - A TypeScript-first NetSuite API client.
 
-This package provides a pre-built UMD bundle with all dependencies included, optimized for browser and AMD environments.
+This package provides browser-compatible utilities and types from the main package. For full NetSuite API functionality, use the main package in Node.js environments.
 
 ## Installation
 
@@ -15,31 +15,31 @@ yarn add @neatsuite/http-umd
 
 ### CDN
 ```html
-<!-- Development build -->
-<script src="https://unpkg.com/@neatsuite/http-umd/dist/netsuite-http.umd.js"></script>
-
-<!-- Production build (minified) -->
-<script src="https://unpkg.com/@neatsuite/http-umd/dist/netsuite-http.umd.min.js"></script>
+<script src="https://unpkg.com/@neatsuite/http-umd/dist/index.umd.js"></script>
 ```
 
 ## Usage
 
 ### Browser Global
 ```html
-<script src="https://unpkg.com/@neatsuite/http-umd/dist/netsuite-http.umd.min.js"></script>
+<script src="https://unpkg.com/@neatsuite/http-umd/dist/index.umd.js"></script>
 <script>
-  const { NetSuiteClient } = neatHttp;
+  const { 
+    ResponseCache, 
+    RateLimiter, 
+    RequestBatcher,
+    formatNetSuiteDate,
+    parseNetSuiteDate,
+    buildSearchQuery,
+    UMD_PACKAGE_INFO 
+  } = neatHttp;
   
-  const client = new NetSuiteClient({
-    oauth: {
-      consumerKey: 'your-consumer-key',
-      consumerSecret: 'your-consumer-secret',
-      tokenKey: 'your-token-key',
-      tokenSecret: 'your-token-secret',
-      realm: 'your-realm'
-    },
-    accountId: 'your-account-id'
-  });
+  console.log('Package info:', UMD_PACKAGE_INFO);
+  
+  // Use utilities
+  const cache = new ResponseCache();
+  const limiter = new RateLimiter(10, 60000);
+  const formattedDate = formatNetSuiteDate(new Date());
 </script>
 ```
 
@@ -47,40 +47,48 @@ yarn add @neatsuite/http-umd
 ```javascript
 require.config({
   paths: {
-    'netsuite-http': 'https://unpkg.com/@neatsuite/http-umd/dist/netsuite-http.umd.min'
+    'netsuite-http-utils': 'https://unpkg.com/@neatsuite/http-umd/dist/index.umd'
   }
 });
 
-require(['netsuite-http'], function(neatHttp) {
-  const { NetSuiteClient } = neatHttp;
-  // Use the client
+require(['netsuite-http-utils'], function(netSuiteUtils) {
+  const { ResponseCache, RateLimiter } = netSuiteUtils;
+  // Use the utilities
 });
 ```
 
 ### ES Modules in Browser
 ```html
 <script type="module">
-  import neatHttp from 'https://unpkg.com/@neatsuite/http-umd/dist/netsuite-http.umd.js';
-  const { NetSuiteClient } = neatHttp;
-  // Use the client
+  import netSuiteUtils from 'https://unpkg.com/@neatsuite/http-umd/dist/index.umd.js';
+  const { ResponseCache, formatNetSuiteDate } = netSuiteUtils;
+  // Use the utilities
 </script>
 ```
 
 ## Bundle Details
 
-- **Regular Build**: ~480KB (includes all dependencies)
-- **Minified Build**: ~180KB (production-ready)
+- **Build Size**: ~9KB (utilities and types only)
 - **Global Name**: `neatHttp`
-- **Included Dependencies**: axios, oauth-1.0a, p-retry
+- **Exports**: Browser-compatible utilities and TypeScript types
+- **Dependencies**: None (utilities are self-contained)
+
+## What's Included
+
+This package provides:
+- **Utilities**: ResponseCache, RateLimiter, RequestBatcher
+- **Helper Functions**: Date formatting, query building, field sanitization
+- **TypeScript Types**: All interfaces and types from the main package
+- **Validation**: Configuration validation utilities
 
 ## Why a Separate Package?
 
-The main `@neatsuite/http` package is optimized for Node.js environments where dependencies are managed separately. This UMD package:
+The main `@neatsuite/http` package requires Node.js built-ins (crypto, http, https) for OAuth 1.0a authentication, making it unsuitable for direct browser use. This UMD package:
 
-- **Bundles all dependencies** for zero-config browser usage
-- **Provides minified builds** for production
+- **Provides browser-compatible utilities** without Node.js dependencies
+- **Exports TypeScript types** for development
 - **Supports multiple module systems** (AMD, CommonJS, browser global)
-- **Keeps the main package lean** for Node.js users
+- **Keeps bundle size minimal** by excluding Node.js-specific code
 
 ## Documentation
 

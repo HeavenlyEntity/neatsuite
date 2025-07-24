@@ -1,11 +1,11 @@
 {
   "name": "@neatsuite/http-umd",
-  "version": "1.1.1",
+  "version": "2.1.2",
   "description": "UMD/Browser bundle for @neatsuite/http - NetSuite API client",
-  "main": "./dist/netsuite-http.umd.js",
-  "browser": "./dist/netsuite-http.umd.js",
-  "unpkg": "./dist/netsuite-http.umd.min.js",
-  "jsdelivr": "./dist/netsuite-http.umd.min.js",
+  "main": "./dist/index.umd.js",
+  "browser": "./dist/index.umd.js",
+  "unpkg": "./dist/index.umd.js",
+  "jsdelivr": "./dist/index.umd.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist/**",
@@ -17,7 +17,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@neatsuite/http": "^1.1.1"
+    "@neatsuite/http": "^2.1.2"
   },
   "devDependencies": {
     "tsup": "^8.0.2",

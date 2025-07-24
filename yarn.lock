@@ -828,7 +828,7 @@
   integrity sha512-9b8mPpKrfeGRuhFH5iO1iwCLeIIsV6+H1sRfxbkoGXIyQE2BTsPd9zqSqQJ+pv5sJ/hT5M1zvOFL02MnEezFug==
 
 "@neatsuite/core@*", "@neatsuite/core@file:C:\\Users\\Alec M\\Documents\\Github\\netsuite-http\\packages\\neatsuite-core":
-  resolved "git+ssh://git@github.com/packages/amware-core.git"
+  resolved "git+ssh://git@github.com/packages/neatsuite-core.git"
 
 "@neatsuite/docs@file:C:\\Users\\Alec M\\Documents\\Github\\netsuite-http\\apps\\docs":
   version "0.0.0"
@@ -844,8 +844,14 @@
   version "0.0.0"
   resolved "file:packages/eslint-config"
 
-"@neatsuite/http@file:C:\\Users\\Alec M\\Documents\\Github\\netsuite-http\\packages\\netsuite":
-  version "1.0.0"
+"@neatsuite/http-umd@file:C:\\Users\\Alec M\\Documents\\Github\\netsuite-http\\packages\\netsuite-umd":
+  version "2.1.2"
+  resolved "file:packages/netsuite-umd"
+  dependencies:
+    "@neatsuite/http" "^2.1.2"
+
+"@neatsuite/http@^2.1.2", "@neatsuite/http@file:C:\\Users\\Alec M\\Documents\\Github\\netsuite-http\\packages\\netsuite":
+  version "2.1.2"
   resolved "file:packages/netsuite"
   dependencies:
     axios "^1.6.8"
@@ -857,7 +863,7 @@
   resolved "file:packages/neatsuite-tsconfig"
 
 "@neatsuite/utils@*", "@neatsuite/utils@file:C:\\Users\\Alec M\\Documents\\Github\\netsuite-http\\packages\\neatsuite-utils":
-  resolved "git+ssh://git@github.com/packages/amware-utils.git"
+  resolved "git+ssh://git@github.com/packages/neatsuite-utils.git"
 
 "@next/env@14.2.30":
   version "14.2.30"
