@@ -341,51 +341,26 @@ const client = new NetSuiteClient(config, customLogger);
 
 ## Module Formats
 
-This package supports multiple module formats for maximum compatibility:
+This package provides optimized builds for Node.js environments:
 
 - **ES Modules (ESM)**: `import { NetSuiteClient } from '@neatsuite/http'`
 - **CommonJS (CJS)**: `const { NetSuiteClient } = require('@neatsuite/http')`
-- **UMD/AMD**: Compatible with RequireJS and other AMD loaders
 
-### AMD/RequireJS Usage
+### Browser/UMD Usage
 
-```javascript
-// Configure RequireJS
-require.config({
-  paths: {
-    'netsuite-http': './node_modules/@neatsuite/http/dist/index.umd'
-  }
-});
+For browser, AMD/RequireJS, and UMD environments, use the separate UMD package:
 
-// Use with AMD
-require(['netsuite-http'], function(neatHttp) {
-  const { NetSuiteClient } = neatHttp;
-  
-  const client = new NetSuiteClient({
-    oauth: { /* ... */ },
-    accountId: 'your-account-id'
-  });
-});
-
-// Or define a module
-define(['netsuite-http'], function(neatHttp) {
-  const { NetSuiteClient } = neatHttp;
-  // Your module code here
-  return MyNetSuiteService;
-});
+```bash
+npm install @neatsuite/http-umd
 ```
 
-### Browser Global
+The UMD package includes all dependencies bundled and provides:
+- Browser global support (`neatHttp`)
+- AMD/RequireJS compatibility
+- Minified production builds
+- CDN support
 
-When included via script tag, the library is available as `neatHttp`:
-
-```html
-<script src="./node_modules/@neatsuite/http/dist/index.umd.js"></script>
-<script>
-  const { NetSuiteClient } = neatHttp;
-  // Use the client
-</script>
-```
+See [@neatsuite/http-umd](https://www.npmjs.com/package/@neatsuite/http-umd) for browser usage examples.
 
 ## TypeScript Support
 

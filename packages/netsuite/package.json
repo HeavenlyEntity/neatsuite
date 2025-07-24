@@ -4,16 +4,13 @@
   "description": "A TypeScript-first NetSuite API client with built-in OAuth 1.0a authentication, retry logic, and performance monitoring",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
-  "browser": "./dist/index.umd.js",
   "types": "./dist/index.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "browser": "./dist/index.umd.js",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "default": "./dist/index.js"
+      "require": "./dist/index.js"
     }
   },
   "license": "MIT",
@@ -22,8 +19,8 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs,umd --dts",
-    "dev": "tsup src/index.ts --format esm,cjs,umd --watch --dts",
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts --format esm,cjs --watch --dts",
     "lint": "eslint \"src/**/*.ts*\"",
     "test": "jest",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
