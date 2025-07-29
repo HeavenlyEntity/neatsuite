@@ -8,7 +8,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "turbo run build --filter=@amware/docs^... && changeset publish",
+    "release": "turbo run build --filter=@neatsuite/docs^... && changeset publish",
     "build:netsuite": "npm run build --workspace=@neatsuite/http",
     "build:netsuite-umd": "npm run build --workspace=@neatsuite/http-umd",
     "build:all-packages": "npm run build:netsuite && npm run build:netsuite-umd",
