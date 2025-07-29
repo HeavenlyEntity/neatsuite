@@ -1,6 +1,6 @@
 {
   "name": "@neatsuite/http-umd",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "UMD/Browser bundle for @neatsuite/http - NetSuite API client",
   "main": "./dist/index.umd.js",
   "browser": "./dist/index.umd.js",

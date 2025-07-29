@@ -1,6 +1,6 @@
 {
   "name": "@neatsuite/http",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "A TypeScript-first NetSuite API client with built-in OAuth 1.0a authentication, retry logic, and performance monitoring",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
