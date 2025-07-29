@@ -58,10 +58,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/neatsuite/netsuite-http.git"
+    "url": "git+https://github.com/HeavenlyEntity/neatsuite.git"
   },
   "bugs": {
-    "url": "https://github.com/neatsuite/netsuite-http/issues"
+    "url": "https://github.com/HeavenlyEntity/neatsuite/issues"
   },
-  "homepage": "https://github.com/neatsuite/netsuite-http#readme"
+  "homepage": "https://github.com/HeavenlyEntity/neatsuite#readme"
 } 
