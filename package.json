@@ -15,6 +15,7 @@
     "publish:netsuite": "npm publish --workspace=@neatsuite/http",
     "publish:netsuite-umd": "npm publish --workspace=@neatsuite/http-umd",
     "publish:all-packages": "node scripts/publish-packages.js",
+    "publish:github-packages": "node scripts/publish-github-packages.js",
     "package:test": "npm run pack:netsuite && npm run pack:netsuite-umd",
     "pack:netsuite": "npm pack --workspace=@neatsuite/http --dry-run",
     "pack:netsuite-umd": "npm pack --workspace=@neatsuite/http-umd --dry-run"
