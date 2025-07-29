@@ -6,13 +6,22 @@
  * This script will:
  * 1. Clean and build both packages
  * 2. Run package validation tests  
- * 3. Publish both packages to npm
+ * 3. Publish both packages to npm with 2FA support
  * 4. Provide detailed status and error reporting
+ * 
+ * Features:
+ * - Smart auth token detection from .npmrc files
+ * - Supports npm accounts with 2FA enabled
+ * - Interactive OTP prompts or command-line OTP input
+ * - Automatic fallback to OTP if auth token requires 2FA
+ * - Dry-run mode for testing
+ * - Comprehensive error handling and retry logic
  */
 
 const { execSync, spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
 // Configuration
 const PACKAGES = [
@@ -152,13 +161,18 @@ function testPackage(packageInfo) {
   return true;
 }
 
-function publishPackage(packageInfo, isDryRun = false) {
+function publishPackage(packageInfo, isDryRun = false, otp = null) {
   const action = isDryRun ? 'DRY-RUN' : 'PUBLISH';
   logStep(action, `Publishing ${packageInfo.name}...`);
   
-  const command = isDryRun 
+  let command = isDryRun 
     ? `npm publish --dry-run --workspace=${packageInfo.workspace}`
     : `npm publish --workspace=${packageInfo.workspace}`;
+  
+  // Add OTP if provided
+  if (otp && !isDryRun) {
+    command += ` --otp=${otp}`;
+  }
   
   const result = runCommand(command, {
     cwd: process.cwd()
@@ -204,6 +218,37 @@ function checkVersions() {
   return true;
 }
 
+function checkAuthToken() {
+  // Check for auth tokens in various .npmrc locations
+  const npmrcPaths = [
+    path.join(process.cwd(), '.npmrc'),           // Project .npmrc
+    path.join(os.homedir(), '.npmrc'),            // User .npmrc
+    path.join(process.env.PREFIX || '/usr/local', 'etc', 'npmrc') // Global .npmrc
+  ];
+  
+  for (const npmrcPath of npmrcPaths) {
+    if (fs.existsSync(npmrcPath)) {
+      try {
+        const content = fs.readFileSync(npmrcPath, 'utf8');
+        // Look for auth tokens for npm registry
+        const authTokenMatch = content.match(/^\/\/registry\.npmjs\.org\/:_authToken=(.+)$/m);
+        if (authTokenMatch && authTokenMatch[1].trim()) {
+          return {
+            hasToken: true,
+            tokenFile: npmrcPath,
+            token: authTokenMatch[1].trim()
+          };
+        }
+      } catch (error) {
+        // Continue to next file if this one can't be read
+        continue;
+      }
+    }
+  }
+  
+  return { hasToken: false };
+}
+
 async function promptUser(question) {
   return new Promise((resolve) => {
     const readline = require('readline').createInterface({
@@ -222,6 +267,25 @@ async function main() {
   const args = process.argv.slice(2);
   const isDryRun = args.includes('--dry-run');
   const skipPrompt = args.includes('--yes') || args.includes('-y');
+  
+  // Check for OTP argument
+  const otpIndex = args.findIndex(arg => arg.startsWith('--otp='));
+  const otpFromArgs = otpIndex !== -1 ? args[otpIndex].split('=')[1] : null;
+  
+  // Check for help
+  if (args.includes('--help') || args.includes('-h')) {
+    log('\n🚀 NetSuite HTTP Packages - Build & Publish Script', 'bright');
+    log('================================================', 'cyan');
+    log('\nUsage: node scripts/publish-packages.js [options]', 'cyan');
+    log('\nOptions:', 'yellow');
+    log('  --dry-run       Test the publish process without actually publishing', 'blue');
+    log('  --yes, -y       Skip confirmation prompts', 'blue');
+    log('  --otp=<code>    Provide 2FA OTP code directly (6 digits)', 'blue');
+    log('  --help, -h      Show this help message', 'blue');
+    log('\nNote: The script will check for auth tokens in .npmrc files.', 'yellow');
+    log('If no auth token is found or 2FA is required, you will be prompted for an OTP code.', 'yellow');
+    process.exit(0);
+  }
   
   log('\n🚀 NetSuite HTTP Packages - Build & Publish Script', 'bright');
   log('================================================', 'cyan');
@@ -275,15 +339,68 @@ async function main() {
     }
   }
   
-  // Step 6: Publish packages
+  // Step 6: Check for auth token and get OTP if needed
+  const authCheck = checkAuthToken();
+  let otp = null;
+  
+  if (!isDryRun) {
+    if (authCheck.hasToken) {
+      log(`🔑 Found auth token in ${authCheck.tokenFile}`, 'green');
+      log('Skipping OTP prompt (will retry with OTP if publish fails)', 'cyan');
+    } else {
+      log('No auth token found in .npmrc files', 'yellow');
+      if (otpFromArgs) {
+        if (!/^\d{6}$/.test(otpFromArgs)) {
+          logError('Invalid OTP format in --otp argument. Please provide a 6-digit code.');
+          process.exit(1);
+        }
+        otp = otpFromArgs;
+        log(`🔐 Using OTP from command line: ${otp}`, 'cyan');
+      } else {
+        otp = await promptUser('\n🔐 Enter your 2FA OTP code (6 digits): ');
+        if (!otp || !/^\d{6}$/.test(otp)) {
+          logError('Invalid OTP format. Please enter a 6-digit code.');
+          process.exit(1);
+        }
+      }
+    }
+  }
+
+  // Step 7: Publish packages
   logStep('5', isDryRun ? 'Testing publication...' : 'Publishing packages...');
   let publishCount = 0;
   
   for (const pkg of PACKAGES) {
-    if (publishPackage(pkg, isDryRun)) {
+    if (publishPackage(pkg, isDryRun, otp)) {
       publishCount++;
     } else {
       logError(`Publication failed for ${pkg.name}`);
+      // If first package fails, it might be due to 2FA requirements
+      if (!isDryRun && pkg === PACKAGES[0] && publishCount === 0) {
+        if (authCheck.hasToken && !otp) {
+          log('\nAuth token found but publish failed. This might require 2FA.', 'yellow');
+          const retryOtp = await promptUser('Enter your 2FA OTP code (6 digits): ');
+          if (retryOtp && /^\d{6}$/.test(retryOtp)) {
+            log('Retrying with OTP...', 'cyan');
+            if (publishPackage(pkg, isDryRun, retryOtp)) {
+              otp = retryOtp; // Use the OTP for remaining packages
+              publishCount++;
+              continue;
+            }
+          }
+        } else if (otp) {
+          log('\nThis might be due to an invalid or expired OTP code.', 'yellow');
+          const retryOtp = await promptUser('Enter a new OTP code: ');
+          if (retryOtp && /^\d{6}$/.test(retryOtp)) {
+            log('Retrying with new OTP...', 'cyan');
+            if (publishPackage(pkg, isDryRun, retryOtp)) {
+              otp = retryOtp; // Use the new OTP for remaining packages
+              publishCount++;
+              continue;
+            }
+          }
+        }
+      }
       process.exit(1);
     }
   }
