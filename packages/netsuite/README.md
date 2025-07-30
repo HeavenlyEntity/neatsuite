@@ -1,5 +1,9 @@
 # @neatsuite/http
 
+![NPM Version](https://img.shields.io/npm/v/%40neatsuite%2Fhttp?style=for-the-badge&labelColor=%23343434)
+![NPM Downloads](https://img.shields.io/npm/dm/%40neatsuite%2Fhttp?style=for-the-badge)
+
+
 A TypeScript-first NetSuite API client with built-in OAuth 1.0a authentication, automatic retries, performance monitoring, and excellent developer experience. Lightweight and using only 3 dependencies.
 
 ## Features
