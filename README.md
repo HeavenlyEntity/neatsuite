@@ -1,5 +1,15 @@
 # NeatSuite - NetSuite Development Tools
 
+<img width="1312" height="736" alt="Modern software announcement banner for 'neatsuite' HTTP library, featuring a dark gradient background, bold modern font, code snippets, subtle neon developer accents, and a Ko-Fi coffee cup icon_" src="https://github.com/user-attachments/assets/222acfd1-67cb-4413-ac07-4816ab70a159" />
+
+![NPM Downloads](https://img.shields.io/npm/dm/%40neatsuite%2Fhttp?style=for-the-badge&label=http-%20Downloads)
+![NPM Downloads](https://img.shields.io/npm/dm/%40neatsuite%2Fhttp-umd?style=for-the-badge&label=http-umd%20-%20Downloads)
+![NPM Version](https://img.shields.io/npm/v/%40neatsuite%2Fhttp?style=for-the-badge&label=%40neatsuite%2Fhttp)
+![NPM Version](https://img.shields.io/npm/v/%40neatsuite%2Fhttp-umd?style=for-the-badge&label=%40neatsuite%2Fhttp-umd&color=214eee)
+
+
+
+
 A comprehensive TypeScript-first monorepo of tools, utilities, and React components for NetSuite development. Built with performance, developer experience, and type safety in mind.
 
 ## 🚀 What's Inside?
