@@ -45,8 +45,6 @@ npm install @neatsuite/http
 # For browser/client-side usage
 npm install @neatsuite/http-umd
 
-# For React components
-npm install @neatsuite/core @neatsuite/utils
 ```
 
 ### Basic Usage
