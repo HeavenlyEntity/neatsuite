@@ -224,7 +224,7 @@ When reporting issues, please include:
 - Improved error handling and debugging tools
 
 ### Future Plans
-- GraphQL support for NetSuite SuiteTalk
+- SuiteQL support for NetSuite SuiteTalk
 - Visual form builders for NetSuite records
 - Real-time data synchronization utilities
 - Enhanced testing and mocking tools
@@ -242,6 +242,7 @@ This project is licensed under the [MIT License](LICENSE).
 ## 🙏 Acknowledgments
 
 - NetSuite for providing the APIs that make this project possible
+- Axios for its beautiful HTTP library
 - The TypeScript and React communities for excellent tooling
 - All contributors who help improve NeatSuite
 
