@@ -80,10 +80,10 @@ const response = await client.restlet({
 - **Package Manager**: npm (v10.9.2 recommended)
 - **Git**: For version control and contributions
 
-### Clone and Install
+### Fork and Install
 
 ```bash
-# Clone the repository
+# Fork and clone the forked repository
 git clone https://github.com/neatsuite/netsuite-http.git
 cd neatsuite
 
