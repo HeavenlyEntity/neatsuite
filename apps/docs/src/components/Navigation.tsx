@@ -238,6 +238,7 @@ export const navigation: Array<NavGroup> = [
     links: [
       { title: 'Introduction', href: '/' },
       { title: 'Quickstart', href: '/quickstart' },
+       { title: 'Playground', href: '/playground' },
       { title: 'SDKs', href: '/sdks' },
       { title: 'Authentication', href: '/authentication' },
       { title: 'Pagination', href: '/pagination' },
