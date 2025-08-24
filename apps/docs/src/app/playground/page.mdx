@@ -2,17 +2,51 @@ export const metadata = {
   title: 'Playground',
   description: 'Interactive page to experiment with the NeatSuite HTTP client.',
 }
+
 import Playground from '@/components/Playground'
-/* If your project has an alias like "@/components", you can do:
-   import Playground from '@/components/Playground'
-*/
+import { Button } from '@/components/Button'
+import { Note } from '@/components/Note'
 
 # Interactive Playground
 
-Type or edit code on the left and press **RUN** to see the result.
+Experiment with the NeatSuite HTTP client concepts in a safe sandbox.  
+Edit the code on the left and press **RUN** to see the result on the right.  
+This page performs **no network calls** and uses **no credentials**.
 
-<Note>
-  Learning demo only. Do **not** paste real credentials here.
+<Note type="warning">
+  <strong>Learning demo only.</strong> Runs entirely in your browser (no requests). Do <strong>not</strong> paste real credentials.
+  Real OAuth signing must be done <strong>server-side</strong> to keep secrets secure.
 </Note>
 
+## How to use this playground
+
+1. **Edit the code** on the left (the example shows the basic structure).
+2. Define a `main()` function that returns a value.
+3. Press **RUN** to see the formatted JSON result.
+
+## Understanding NetSuite OAuth 1.0a
+
+When using NeatSuite’s **server-side** client, you typically configure:
+- `consumerKey`, `consumerSecret`
+- `tokenKey`, `tokenSecret`
+- `realm` (your NetSuite account ID)
+- `accountId` (if required by the client)
+
+Store these in `.env.local` and use them **only on the server** (never in the browser).
+
+## Try it
+
 <Playground />
+
+## Next Steps
+
+- **[Quickstart](/quickstart)** – install the client and make your first real request (server-side).
+- **[Authentication](/authentication)** – configure OAuth 1.0a safely.
+- **[SDKs](/sdks)** – available client libraries.
+- **[Webhooks](/webhooks)** – receive real-time events.
+
+<div className="not-prose">
+  <Button href="/quickstart" variant="text" arrow="right">
+    Go to Quickstart
+  </Button>
+</div>
